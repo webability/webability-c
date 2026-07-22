@@ -6,17 +6,31 @@ Cliente oficial en C para conectarse a los servicios de [WebAbility](https://www
 
 C no tiene un gestor de paquetes universal, así que esta librería se distribuye como fuente (y opcionalmente vía vcpkg/Conan más adelante).
 
+### Dependencias del sistema
+
+Requiere **libcurl** (transporte HTTP) y **OpenSSL** (HMAC-SHA256). En Debian/Ubuntu:
+
+```bash
+sudo apt install libcurl4-openssl-dev libssl-dev
+```
+
 ## Build
 
 ```bash
 make
 ```
 
+Esto genera `libwebability_api.a`. El `Makefile` solo empaqueta el `.a` — no enlaza nada — así que tu programa debe enlazar además con `-lcurl -lcrypto`:
+
+```bash
+cc myapp.c -Lpath/a/webability-c -lwebability_api -lcurl -lcrypto -o myapp
+```
+
 ## Servicios disponibles
 
 | Servicio    | Estado                                                        |
 |-------------|----------------------------------------------------------------|
-| DNS         | 🚧 Pendiente de portar desde webability-go                     |
+| DNS         | ✅ Implementado (`src/dns.h`/`src/dns.c`)                       |
 | Imágenes    | 🚧 Pendiente de portar desde webability-go                     |
 | Mail        | 🚧 Pendiente de portar desde webability-go                     |
 | Video       | 🚧 Borrador solamente en webability-go, aún sin servidor real  |
@@ -26,7 +40,7 @@ make
 
 - https://www.webability.info/documentacion/dns
 - https://www.webability.info/documentacion/imagenes
-- https://www.webability.info/documentacion/mailing
+- https://www.webability.info/documentacion/mail
 - https://www.webability.info/documentacion/video
 
 ## Estado
