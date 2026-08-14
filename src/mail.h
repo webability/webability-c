@@ -36,6 +36,15 @@ typedef struct {
 typedef struct {
     wa_mail_address_t from;
     wa_mail_recipient_t to;
+    /* template: si no es NULL/"", es el id de una plantilla ya registrada y
+     * activa en templates_template bajo la cuenta que autentica el request —
+     * el servidor arma el correo con esa plantilla en vez de
+     * subject/html/text (que se ignoran si template viene). La
+     * personalizacion usa las vars de "to", igual que en el envio ad-hoc. El
+     * servidor valida que la plantilla exista y este activa ANTES de
+     * encolar el correo: si no, wa_mail_send() devuelve 1 (error de API,
+     * codigos 3025/3026), no un envio "pending" fallido. */
+    const char *template;
     const char *subject;
     const char *html;
     const char *text;
