@@ -40,10 +40,13 @@ typedef struct {
      * activa en templates_template bajo la cuenta que autentica el request —
      * el servidor arma el correo con esa plantilla en vez de
      * subject/html/text (que se ignoran si template viene). La
-     * personalizacion usa las vars de "to", igual que en el envio ad-hoc. El
-     * servidor valida que la plantilla exista y este activa ANTES de
-     * encolar el correo: si no, wa_mail_send() devuelve 1 (error de API,
-     * codigos 3025/3026), no un envio "pending" fallido. */
+     * personalizacion usa las vars de "to", sin ningun prefijo en los
+     * nombres -- dentro del contenido de la plantilla (Consola -> Correos ->
+     * Plantillas) se acceden como {{vars>clave}}, no {{clave}} a secas (eso
+     * ultimo solo aplica al envio ad-hoc, sin template). El servidor valida
+     * que la plantilla exista y este activa ANTES de encolar el correo: si
+     * no, wa_mail_send() devuelve 1 (error de API, codigos 3025/3026), no un
+     * envio "pending" fallido. */
     const char *template;
     const char *subject;
     const char *html;
